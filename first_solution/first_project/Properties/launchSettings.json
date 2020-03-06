@@ -1,7 +1,8 @@
 {
   "profiles": {
     "first_project": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "https://github.com/"
     }
   }
 }

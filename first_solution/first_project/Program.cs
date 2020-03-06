@@ -10,20 +10,43 @@ namespace first_project
         public static async Task Main(string[] args)
         {
             var websiteUrl = args.Length > 0 ? args[0] : throw new ArgumentNullException();
-            var httpClient = new HttpClient();
-            var response = await httpClient.GetAsync(websiteUrl);
-            if(response.IsSuccessStatusCode)
+            if(websiteUrl == null)
             {
-                var htmlContent = await response.Content.ReadAsStringAsync();
+                throw new ArgumentException("Empty");
+            }
+            var httpClient = new HttpClient();
 
-                var regex = new Regex("[a-z]+[a-z0-9]*@[a-z0-9]+\\.[a-z]+", RegexOptions.IgnoreCase);
+            try
+            {
 
-                var emailAddresses = regex.Matches(htmlContent);
-                foreach(var emailAddress in emailAddresses)
+                var response = await httpClient.GetAsync(websiteUrl);
+                httpClient.Dispose();
+
+                if (response.IsSuccessStatusCode)
                 {
-                    Console.WriteLine("Email: {0}", emailAddress.ToString());
+                    var htmlContent = await response.Content.ReadAsStringAsync();
+
+                    var regex = new Regex("[a-z]+[a-z0-9]*@[a-z0-9]+\\.[a-z]+", RegexOptions.IgnoreCase);
+
+                    var emailAddresses = regex.Matches(htmlContent);
+                    if (emailAddresses.Count > 0)
+                    {
+                        foreach (var emailAddress in emailAddresses)
+                        {
+                            Console.WriteLine("Email: {0}", emailAddress.ToString());
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No email addresses found");
+                    }
                 }
             }
+            catch(Exception)
+            {
+                Console.WriteLine("Error while dowloading page");
+            }
+            
             Console.ReadKey();
         }
     }
