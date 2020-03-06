@@ -21,7 +21,7 @@ namespace first_project
                 var emailAddresses = regex.Matches(htmlContent);
                 foreach(var emailAddress in emailAddresses)
                 {
-                    Console.WriteLine(emailAddress.ToString());
+                    Console.WriteLine("Email: {0}", emailAddress.ToString());
                 }
             }
             Console.ReadKey();
