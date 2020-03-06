@@ -9,7 +9,7 @@ namespace first_project
     {
         public static async Task Main(string[] args)
         {
-            var websiteUrl = args[0];
+            var websiteUrl = args.Length > 0 ? args[0] : throw new ArgumentNullException();
             var httpClient = new HttpClient();
             var response = await httpClient.GetAsync(websiteUrl);
             if(response.IsSuccessStatusCode)

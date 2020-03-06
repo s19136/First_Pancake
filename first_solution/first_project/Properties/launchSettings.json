@@ -1,8 +1,7 @@
 {
   "profiles": {
     "first_project": {
-      "commandName": "Project",
-      "commandLineArgs": "https://www.pja.edu.pl/"
+      "commandName": "Project"
     }
   }
 }
